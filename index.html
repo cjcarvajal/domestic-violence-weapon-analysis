@@ -7,11 +7,74 @@
 </head>
 
 <body>
+    <style>
+        .paragraph {
+			margin-left: 50px;
+			margin-right: 50px;
+			font-size: 18px;
+		}
+
+		.center_text {
+        	text-align: center;
+    	}
+	</style>
     <h1 class="center_text">Violencia Intrafamiliar</h1>
-    <h2 class="center_text">¿El dia mas ?</h2>
-    <div id="selector"></div>
-    <svg id='principal' width="960" height="500">
-    </svg>
+    <h2 class="center_text">¿Agresiones con escopolamina?</h2>
+    <div class="paragraph">
+        <p>Continuando con la investigación sobre incidentes de violencia intrafamiliar, se tomó la decisión de hacer una análisis sobre el tipo de arma empleada en los incidentes. En todos los incidentes reportados se encontro como tipos de arma usada las siguientes:</p>
+        <ul>
+            <li>Cortopunzante</li>
+            <li>Arma de fuego</li>
+            <li>Contundente</li>
+            <li>Escopolamina</li>
+        </ul>
+        <p>Cabe aclarar que algunos de los incidentes se llevaron a cabo sin el uso de armas y en otros casos no se dejo reporte de que tipo de arma se uso. Sin embargo de lo descrito anteriormente, causa impresión una estadistica ¿Escopolamina en violencia intrafamiliar? Dada esta caracteristica se generó una visualización teniendo en cuenta el tipo de dato temporal con el que se cuenta que permita identificar los dias en que se presentaron mas incidentes con cierto tipo de arma involucrada.</p>
+        <div id="selector"></div>
+        <svg id='principal' width="960" height="270">
+        </svg>
+        <p>The visualization is based on the M. Bostock code available <a href="https://beta.observablehq.com/@mbostock/d3-calendar-view">here</a>
+        </p>
+    </div>
+    <hr>
+    <div class="paragraph">
+        <h2>WHY - WHAT - HOW</h2>
+        <h3>Tarea Principal</h3>
+        <p>Identificar los días en que se presentarón mas incidentes con cierto tipo de arma.</p>
+        <h3>Tarea Secundaria</h3>
+        <p>Analizar la tendencia en los incidentes según un tipo de arma usada.</p>
+        <p>Según la abstracción de Tamara se tiene:</p>
+        <ul>
+            <li>Identify outliers</li>
+            <li>Summarize distribution</li>
+            <li>Derive features</li>
+        </ul>
+        <h3>Abstracción de Datos</h3>
+        <p>Se trata de un dataset de tipo temporal, mostrando los incidentes desde el primero de enero del hasta el siete de julio del 2018.</p>
+        <ul>
+            <li><b>Tipo de arma:</b> Categorical</li>
+            <li><b>Semana:</b> Ordered, Sequential</li>
+            <li><b>Dia de la semana:</b> Ordered, Cyclic</li>
+            <li><b>incidentesPorDiaPorArma:</b> Ordered, Quantitative, Sequential</li>
+        </ul>
+        <h3>Marcas y Canales</h3>
+        <p>La marca usada es el <b>área</b>, los canales dependiendo del atributo son:</p>
+        <ul>
+            <li><b>Semana:</b> Position on common scale</li>
+            <li><b>Dia de la semana:</b> Spatial region</li>
+            <li><b>incidentesDepartamentoDia:</b>Color saturation between defined color scale</li>
+        </ul>
+        <p>Los meses estan delimitados como áreas dentro de la visualización, ademas los atributos de fecha, mes y número de incidentes son incluidos como labels. El tipo de arma se usa como filtro.</p>
+    </div>
+    <hr>
+    <div class="paragraph">
+        <h2>Insights</h2>
+        <ul>
+            <li>Los incidentes con escopolamina solo se presentan en enero, presentandose un pico el 13 de enero con 11 incidentes, el 20 de enero se presenta otro pico con 10 incidentes.</li>
+            <li>El primero de enero se presentó el mayor número de incidentes con armas contundentes con 213 incidentes. El 22 de abril se presenta otro pico con 179 incidentes.</li>
+            <li>Los incidentes con arma de fuego son escasos a lo largo del año, en contraste, los incidentes con arma cortopunzante son comunes a lo largo de todo el año con picos reconocidos el primero de enero y el 19 de marzo.</li>
+            <li>Se presenta un pico de incidentes sin uso de arma el 21 de enero.</li>
+        </ul>
+    </div>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script type="text/javascript">
     const cellSize = 34;
@@ -151,7 +214,7 @@
 
     const handleMouseOver = (d, i) => {
 
-    	timeFormater = d3.timeFormat("%Y/%m/%d %A");
+        timeFormater = d3.timeFormat("%Y/%m/%d %A");
 
         svg.append("text")
             .attr("id", "dateTag")
@@ -159,7 +222,7 @@
             .attr("y", 30)
             .attr("fill", "steelblue")
             .attr("font-weight", "bold")
-            .attr("font-size","18")
+            .attr("font-size", "18")
             .text(timeFormater(d.fecha) + " " + d.total + " incidente(s)");
     }
 
@@ -207,7 +270,7 @@
             });
 
         //.append("title")
-         //   .text(d => `${formatDate(d.fecha)}: ${format(d.value)}`);
+        //   .text(d => `${formatDate(d.fecha)}: ${format(d.value)}`);
 
         const month = year.append("g")
             .selectAll("g")
